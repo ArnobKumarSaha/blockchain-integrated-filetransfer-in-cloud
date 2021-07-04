@@ -1,0 +1,52 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/user.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+                <% if (errorMessage) { %>
+                    <div class="user-message user-message--error"><%= errorMessage %></div>
+                <% } %>
+
+                
+                <% if (docs.length > 0) { %>
+                    <div class="grid">
+                        <% for (let doc of docs) { %>
+                            <article class="card user-item">
+                                <header class="card__header">
+                                    <h3 class="user__description">
+                                        Doc name = <%= doc[0] %>
+                                    </h3>
+                                    <h1 class="user__name">
+                                        Matched with entered keywords = <%= doc[1] %> times.
+                                    </h1>
+
+                                    <h3 class="user__email">
+                                        Data Owner = <%= doc[2] %>
+                                    </h3>
+                                </header>
+
+                                <div class="card__actions">
+
+                                    <form action="/user/request-file/<%= doc[2] %>/<%= doc[0] %>" method="POST">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <button class="btn" type="submit">Request to get this file</button>
+                                    </form>
+
+                                </div>
+    
+                            </article>
+                            <% } %>
+                    </div>
+                    <% } else { %>
+                        <h1>No docs Found!</h1>
+                        <% } %>
+
+
+
+
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            </main>
+            <%- include('../includes/end.ejs') %>

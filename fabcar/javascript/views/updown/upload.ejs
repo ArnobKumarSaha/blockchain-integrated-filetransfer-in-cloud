@@ -1,0 +1,34 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/user.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+
+                <% if (errorMessage) { %>
+                    <div class="user-message user-message--error"><%= errorMessage %></div>
+                <% } %>
+                
+                <form class="login-form" action="/user/upload" method="POST" enctype="multipart/form-data">
+                    <div class="form-control">
+                        <label for="name">FileName</label>
+                        <input type="name" name="name" id="name">
+                    </div>
+
+                    <div class="form-control">
+                        <label for="Keyword">Keyword</label>
+                        <input type="text" name="keyword" id="keyword">
+                    </div>
+
+                    <div class="form-control">
+                        <label for="file">Your File</label>
+                        <input type="file" name="file" id="file">
+                    </div>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button class="btn" type="submit">Upload</button>
+                </form>
+
+            </main>
+            <%- include('../includes/end.ejs') %>

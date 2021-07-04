@@ -1,0 +1,45 @@
+
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/user.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+        <main>
+            <% if (requests.length > 0) { %>
+                <div class="grid">
+                    <% for (let request of requests) { %>
+                        <% if (request.isAccept != 0) { %>
+                            <% if (request.isAccept == 2) { %>
+                                <article class="card user-item">
+                                    <header class="card__header">
+                                        <h1 class="user__name">
+                                            <%= request.ownerId %> Accepted your request to access.
+                                        </h1>
+                                    </header>
+
+                                    <div class="card__actions">
+                                        <a href="/user/show-decrypted-content/<%= request.fileContent%>/<%= request.noncePlain%>/<%= request.nonceGet%>" class="btn">Show Content</a> 
+        
+                                    </div>
+
+                                </article>
+                                <% } else { %>
+                                    <article class="card user-item">
+                                        <header class="card__header">
+                                            <h1 class="user__name">
+                                                <%= request.ownerId %> denied your request to access.
+                                            </h1>
+                                        </header>
+                                    </article>
+                                <% } %>
+                            <% } %>
+                        <% } %>
+                </div>
+                <% } else { %>
+                    <h1>Still No Requests!</h1>
+                    <% } %>
+        </main>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <%- include('../includes/end.ejs') %>

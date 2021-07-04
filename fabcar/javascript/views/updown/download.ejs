@@ -1,0 +1,20 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/user.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+
+                <form class="login-form" action="/user/download" method="POST" enctype="multipart/form-data">
+
+                    <div class="form-control">
+                        <label for="Keyword">Search with your space separated keywords: </label>
+                        <input type="text" name="keyword" id="keyword">
+                    </div>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button class="btn" type="submit">Search</button>
+                </form>
+            </main>
+            <%- include('../includes/end.ejs') %>
