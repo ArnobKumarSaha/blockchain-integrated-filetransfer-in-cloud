@@ -1,5 +1,83 @@
 [//]: # (SPDX-License-Identifier: CC-BY-4.0)
 
+
+
+# Instructions
+
+1. PREREQUISITE
+sudo apt-get install git  // Installing Git
+sudo apt-get install curl  // Installing curl
+
+
+
+2. IN CASE, DOCKER NOT INSTALLED
+docker
+docker-compose
+docker --version // for check if Docker is installed successfully
+docker-compose --version
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -a -G docker <username>  // add user to the Docker group
+
+
+3. IN CASE, DOCKER IS INSTALLED
+docker system prune --volumes       // prune the anonymous volumes
+docker rm -vf $(docker ps -a -q)    // Remove Docker containers , -v remove anonymous volumes, force, -q shows only IDs
+docker rmi -f $(docker images -a -q)   // Remove Docker images
+
+
+4. IN CASE ALREADY COUCHDB is running locally
+snap stop couchdb.server
+
+
+5. Pull down the fabric samples , binaries and images.
+curl -sSL https://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh | bash -s -- 2.2.3 1.5.0   	// <fabric_version> <fabric-ca_version>
+
+
+6. INSTALLING NODE
+#Please try to avoid using apt get to install on Ubuntu node.js , if you have already done so, please remove it manually
+sudo apt-get purge nodejs && sudo apt-get autoremove && sudo apt-get autoclean
+
+#Use NVM to install
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+
+#Check whether the installation of NVM is successful
+nvm --version
+
+#Check out all versions of nodejs that can be installed
+nvm ls-remote     
+
+#The latest long-term support version of nodejs is 12.18.2
+nvm install 12.18.2
+
+#View nodejs version
+node -v
+
+
+7. Now clone this git repo.
+git clone https://github.com/ArnobKumarSaha/blockchain-integrated-filetransfer-in-cloud.git
+
+
+8. Copy and replace /fabcar/javascript folder from this git repo into your locally created fabric-samples project, in /fabric-samples/fabcar/javascript folder.
+Similiarly, Copy and replace /fabcar/testRun.sh bash file from this git repo into your locally created fabric-samples project, in /fabric-samples/fabcar/testRun.sh bash file.
+And, Copy and replace /chainecode/fabcar/go/fabcar.go file from this git repo into your locally created fabric-samples project, in /fabric-samples/chainecode/fabcar/go/fabcar.go file.
+
+
+8. Now navigate to /fabcar folder of this project.
+Run ./networkDown.sh
+./startFabric.sh
+./testRun.sh 
+one by one.
+
+If successful, You should see the name of all cars in the last line.
+
+
+9. Go to /fabcar/javascript folder of your local project, and run node app.js to run the blockchain integrated node application.
+This will open in 8000 port.  localhost:8000 
+
+10. To see the current state of the databse, go to localhost:5984/_utils
+  
+
 # Hyperledger Fabric Samples
 
 You can use Fabric samples to get started working with Hyperledger Fabric, explore important Fabric features, and learn how to build applications that can interact with blockchain networks using the Fabric SDKs. To learn more about Hyperledger Fabric, visit the [Fabric documentation](https://hyperledger-fabric.readthedocs.io/en/latest).
